@@ -4,7 +4,7 @@ from .forms import ContactFrom
 
 # Home Page View
 def index(request):
-    allbooks = DriveBooks.objects.all()
+    allbooks = DriveBooks.objects.all()[:5]
     request.session.get('email')
     return render(request,'core/index.html',{"allbooks":allbooks})
 
