@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="bg-gray-950 min-h-screen flex items-center justify-center px-4">
+
+<div class="bg-gray-900 border border-gray-800 rounded-2xl p-10 max-w-xl text-center shadow-xl">
+
+<div class="mb-6">
+<i class="fa-solid fa-circle-exclamation text-red-500 text-6xl"></i>
+</div>
+
+<h1 class="text-3xl font-bold text-white mb-4">
+Download Not Available
+</h1>
+
+<p class="text-gray-400 mb-6 leading-relaxed">
+Sorry, you are not allowed to download this book right now.
+If you want to download books, please contact DigiLibrary support.
+</p>
+
+<div class="bg-gray-800 border border-gray-700 rounded-lg p-4 mb-6">
+
+<p class="text-gray-300">
+For help or download access please email:
+</p>
+
+
+<a href="mailto:digilibrary.help@gmail.com " class="text-cyan-400 font-semibold mt-1">
+digilibrary.help@gmail.com
+</a>
+
+</div>
+
+<div class="flex justify-center gap-4">
+
+<a href="/" 
+class="bg-cyan-600 hover:bg-cyan-500 text-white px-6 py-3 rounded-lg font-semibold transition shadow-md">
+
+<i class="fa-solid fa-house mr-2"></i>
+Go to Home
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+{% endblock %}

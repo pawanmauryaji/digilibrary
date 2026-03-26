@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <!-- Contact Form + Info Section -->
+  <section class="py-16 px-6 md:px-12 bg-gray-900">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      <!-- Contact Info -->
+      <div class="space-y-8 order-2 lg:order-1">
+        <h2 class="text-3xl md:text-4xl font-bold text-blue-400">Get in Touch</h2>
+        <p class="text-gray-300 text-sm md:text-base leading-relaxed">Whether you have a question about our books, need assistance, or just want to share feedback, our team is here to help you.</p>
+
+        <div class="space-y-4">
+          <div class="flex items-center gap-4">
+            <i class="fa-solid fa-envelope text-blue-400 text-xl"></i>
+            <span class="text-gray-300"><a href="mailto:digilibrary.help@gmail.com">digilibrary.help@gmail.com</a></span>
+          </div>
+          <div class="flex items-center gap-4">
+            <i class="fa-solid fa-phone text-blue-400 text-xl"></i>
+            <span class="text-gray-300">+91 7505054960</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <i class="fa-solid fa-location-dot text-blue-400 text-xl"></i>
+            <span class="text-gray-300"><a href="">Ballia, Bareilly, Uttar Pradesh, India</a></span>
+          </div>
+        </div>
+
+        <!-- Colorful Social Media Buttons -->
+        <div class="flex flex-wrap justify-center gap-4 mt-6">
+          <a href="{% url 'social' %}" class="flex-1 min-w-[150px] text-center text-white px-6 py-3 rounded-2xl shadow-lg bg-linear-to-r from-blue-400 via-blue-500 to-blue-600 hover:from-blue-500 hover:via-blue-600 hover:to-blue-700 transition transform hover:scale-105">Facebook</a>
+
+          <a href="{% url 'social' %}" class="flex-1 min-w-[150px] text-center text-white px-6 py-3 rounded-2xl shadow-lg bg-linear-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:from-cyan-500 hover:via-cyan-600 hover:to-cyan-700 transition transform hover:scale-105">Twitter</a>
+ 
+          <a href="{% url 'social' %}" class="flex-1 min-w-[150px] text-center text-white px-6 py-3 rounded-2xl shadow-lg bg-linear-to-r from-pink-400 via-purple-500 to-purple-600 hover:from-pink-500 hover:via-purple-600 hover:to-purple-700 transition transform hover:scale-105">Instagram</a>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <form class="bg-gray-800 p-8 rounded-3xl shadow-xl space-y-6 order-1 lg:order-2" method="POST" novalidate>
+        {% csrf_token %}
+
+        <div>
+          <label for="{{form.name.id_for_lable}}" class="block text-gray-200 font-semibold mb-2">{{form.name.label_tag}}</label>
+          {{form.name}}
+        </div>
+        {% if form.name.errors %}
+          <p class="text-red-600 text-sm mt-1">{{ form.name.errors.0 }}</p>
+        {% endif %}
+
+        <div>
+          <label for="{{form.email.id_for_lable}}" class="block text-gray-200 font-semibold mb-2">{{form.email.label_tag}}</label>
+          {{form.email}}
+        </div>
+        {% if form.email.errors %}
+          <p class="text-red-600 text-sm mt-1">{{ form.email.errors.0 }}</p>
+        {% endif %}
+
+        <div>
+          <label for="{{form.message.id_for_lable}}" class="block text-gray-200 font-semibold mb-2">{{form.message.label_tag}}</label>
+          {{form.message}}
+          {% if form.message.errors %}
+          <p class="text-red-600 text-sm mt-1">{{ form.message.errors.0 }}</p>
+        {% endif %}
+        </div>
+
+       
+
+        <button type="submit" class="w-full bg-linear-to-r from-blue-500 to-cyan-500 text-white font-semibold py-3 rounded-2xl shadow-lg hover:from-blue-600 hover:to-cyan-600 transition transform hover:scale-105">Send Message</button>
+      </form>
+    </div>
+  </section>
+{% endblock %}

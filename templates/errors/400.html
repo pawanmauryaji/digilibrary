@@ -1,0 +1,36 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>404 - Page Not Found</title>
+  
+    {% tailwind_css %}
+</head>
+
+<body class="bg-gray-950 text-white flex items-center justify-center min-h-screen">
+
+<div class="text-center px-6">
+
+<h1 class="text-9xl font-extrabold text-purple-500">400</h1>
+
+<h2 class="text-3xl mt-4 font-semibold">Bad Request</h2>
+
+<p class="text-gray-400 mt-3">
+Your browser sent a request that the server could not understand.
+</p>
+
+<div class="mt-8 flex justify-center gap-4">
+
+<a href="/"
+class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-xl shadow-lg transition">
+Go Home
+</a>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

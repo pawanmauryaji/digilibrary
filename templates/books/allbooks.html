@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <!-- Hero -->
+  <section class="py-14 px-4 bg-linear-to-r from-blue-900 via-indigo-900 to-cyan-900 text-center">
+    <h1 class="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-linear-to-r from-cyan-400 to-blue-400">Our Book Collection</h1>
+    <p class="text-gray-200 mt-3">Explore all available books in our digital library.</p>
+
+    <!-- Search Box For Books -->
+
+    <form method="get">
+      {% csrf_token %}
+      <div class="border-2 border-amber-500 rounded-2xl md:w-2xl md:h-[50px] flex gap-0 justify-center items-center mx-auto md:mt-5 mt-3">
+        {{ form.query }}
+        <button class="p-3 border-2 border-transparent rounded-r-xl bg-amber-500 text-white cursor-pointer h-[50px]"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Books -->
+
+  {% if books %}
+    <section class="py-12 px-4 bg-gray-950 min-h-screen">
+      <div class="max-w-7xl mx-auto grid gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+        {% for book in books %}
+          <div class="bg-gray-800 rounded-xl shadow-md hover:shadow-xl transition duration-300 flex flex-col p-3">
+             
+            <a href="{% url 'detail_book' book.id  %}">
+            <div class="h-56 flex items-center justify-center bg-gray-900 rounded-lg overflow-hidden">
+              <img src="{{ book.cover_image.url }}" alt="{{ book.title }}" class="max-h-full max-w-full object-contain" />
+            </div>
+            </a>
+
+            <div class="mt-3 flex flex-col grow">
+              <h2 class="text-sm md:text-base font-semibold text-cyan-400 wrap-break-word">{{ book.title |capfirst }}</h2>
+              <p class="text-blue-200 text-xs mt-1">
+                <span class="text-amber-400">Author:</span> {{ book.author.name |capfirst }}
+              </p>
+              
+              {% if not request.session.email  %}
+               <!-- View Button -->
+                <form  method="POST">
+                  {% csrf_token %}
+                  <input type="hidden" value="open" name="modal">
+                  <button type="submit" class="mt-3 flex-1 w-full text-center bg-cyan-600 hover:bg-cyan-700 text-white py-2 rounded-md md:text-[15px] text-xs transition">View</button>
+                </form>
+                
+              {% endif %}
+
+              {% if request.session.email %}
+              <!-- View Button -->
+              <form method="POST" action=" {% url 'detail_book' book.id %}">
+                {% csrf_token %}
+                <button type="submit" class="mt-3 flex-1 w-full text-center bg-cyan-600 hover:bg-cyan-700 text-white py-2 rounded-md md:text-[15px] text-xs transition">View</button>
+              </form>
+
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+  {% else %}
+    <p class="text-gray-400 text-center py-10">Sorry No Book Found.</p>
+  {% endif %}
+
+  <!-- Modal -->
+  {% if modal %}
+    <div id="Modal" class="fixed inset-0 flex items-center justify-center bg-transparent bg-opacity-60 z-50 mx-3 md:mx-0">
+      <div class="bg-white dark:bg-gray-900 rounded-3xl p-8 md:p-10 max-w-md w-full shadow-2xl text-center">
+        <div class="flex justify-center mb-4">
+          <svg id="closeIcon" class="w-16 h-16 text-red-500 cursor-pointer" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </div>
+
+        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">Please Login First</h2>
+        <p class="text-gray-600 dark:text-gray-300 mb-6">You need to be logged in to view or download books. If you don’t have an account yet, please register first.</p>
+
+        <div class="flex flex-col md:flex-row gap-4 justify-center">
+          <a href="{% url 'login' %}" class="inline-block w-full md:w-auto px-8 py-3 bg-linear-to-r from-blue-500 to-cyan-500 text-white font-semibold rounded-2xl shadow-lg hover:from-blue-600 hover:to-cyan-600 transition transform hover:scale-105">Login</a>
+
+          <a href="{% url 'register' %}" class="inline-block w-full md:w-auto px-8 py-3 bg-linear-to-r from-amber-500 to-orange-500 text-white font-semibold rounded-2xl shadow-lg hover:from-amber-600 hover:to-orange-600 transition transform hover:scale-105">Register</a>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <style>
+    .modal-open {
+      overflow: hidden;
+    }
+  </style>
+  <script>
+    window.onload = function () {
+      if (document.getElementById('Modal')) {
+        document.body.classList.add('modal-open')
+      }
+    }
+    
+    const modal = document.querySelector("#Modal")
+    const closeIcon = document.querySelector("#closeIcon")
+
+    closeIcon.addEventListener('click',function(e){
+      e.stopPropagation();
+       modal.classList.toggle('hidden')
+        document.body.classList.toggle('modal-open')
+    })
+    document.addEventListener('click',function(){
+      if (e.target === modal) {
+                modal.classList.add('hidden');
+                document.body.classList.remove('modal-open');
+            }
+    })
+  </script>
+
+{% endblock %}
+
+
+

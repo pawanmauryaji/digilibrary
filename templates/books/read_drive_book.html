@@ -1,0 +1,78 @@
+{% load static %}
+
+<style>
+.secure-viewer-frame{
+    width:100%;
+    height:100vh;
+    border:none;
+}
+
+
+@media screen and (max-width:768px){
+.secure-viewer-frame{
+    height:100vh;
+}
+}
+</style>
+
+<div class="relative w-full bg-black overflow-hidden">
+
+    <!-- overlay to hide top controls -->
+    <div style="
+        position:absolute;
+        top:0;
+        right:0;
+        width:200px;
+        height:60px;
+        z-index:10;
+        background:transparent;
+    "></div>
+
+    <iframe
+        class="secure-viewer-frame"
+        src="about:blank"
+        data-secret="{{ url }}"
+        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-presentation"
+        allow="autoplay; encrypted-media"
+        referrerpolicy="no-referrer"
+        allowfullscreen
+    ></iframe>
+
+</div>
+
+<script>
+
+// decode base64 URL
+document.querySelectorAll(".secure-viewer-frame").forEach(frame=>{
+
+    let encoded = frame.getAttribute("data-secret");
+
+    if(encoded){
+        try{
+            let decoded = atob(encoded);
+            frame.src = decoded;
+        }
+        catch(e){
+            console.error("Invalid encoded URL");
+        }
+    }
+
+});
+
+
+document.addEventListener("contextmenu",function(e){
+    e.preventDefault();
+});
+
+
+document.onkeydown=function(e){
+
+    if(e.keyCode==123) return false; 
+
+    if(e.ctrlKey && e.shiftKey && e.keyCode==73) return false; 
+
+    if(e.ctrlKey && e.keyCode==85) return false; 
+
+};
+
+</script>

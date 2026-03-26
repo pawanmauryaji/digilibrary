@@ -1,0 +1,184 @@
+{% load static %}
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="{% static 'images/favicon.png' %}">
+    <title>
+      {% block title %}
+        DigiLibrary 
+      {% endblock %}
+    </title>
+   
+    <link rel="stylesheet" href={% static 'css/all.min.css' %}>
+    <link rel="stylesheet" href={% static 'css/aos.css' %}>
+     {% tailwind_css %}
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="md:py-5 md:px-3 py-3 px-2 bg-[#12224e] sticky top-0 z-50">
+      <div class="flex justify-between items-center px-5 md:px-0">
+        <!-- Logo -->
+         <img src="{% static 'images/logo.png' %}" alt="logo" 
+         class="h-12 w-auto ">
+        <!-- Navbar -->
+  <nav class="md:block md:w-auto w-[80%] h-screen md:h-auto md:static fixed top-0 md:p-0 p-3 md:bg-transparent bg-[#12224e] -left-full duration-300 z-40">
+          <ul class="flex md:flex-row flex-col gap-7 z-10 items-center md:me-10">
+            <li>
+              <img src="{% static 'images/logo.png' %}" alt="logo" 
+         class="h-12 w-auto md:hidden  ">
+              
+            </li>
+            <li>
+              <a href="/" class="text-white hover:text-amber-500 hover:bg-gray-700 px-2 py-2 rounded-xl">Home</a>
+            </li>
+            <li>
+              <a href="{% url 'about' %}" class="text-white hover:text-amber-500 hover:bg-gray-700 px-4 py-2 rounded-xl">About</a>
+            </li>
+            <li>
+              <a href="{% url 'contact' %}" class="text-white hover:text-amber-500 hover:bg-gray-700 px-4 py-2  rounded-xl">Contact</a>
+            </li>
+            <li>
+              <a href="{% url 'allbooks' %}" class="text-white hover:text-amber-500 hover:bg-gray-700 px-4 py-2 rounded-xl">Books</a>
+            </li>
+           
+            {% if not request.session.email %}
+              <li>
+                <a href="{% url 'register' %}" class="text-white bg-blue-900 hover:text-amber-500 hover:bg-gray-700 px-4 py-2 rounded-xl">Register</a>
+              </li>
+              <li>
+                <a href="{% url 'login' %}" class="text-white border-2 border-blue-900 hover:text-amber-500 hover:bg-gray-700 px-6 py-2 rounded-xl">Login</a>
+              </li> 
+            {% endif %}
+
+            {% if request.session.email %}
+              <li>
+                <a href="{% url 'profile' %}" class="text-white hover:text-amber-500 hover:bg-gray-700 px-4 py-2 rounded-xl">Profile</a>
+              </li>
+              <li>
+                <a href="{% url 'logout' %}" class="text-red-600 hover:text-orange-700 hover:bg-gray-700 px-4 py-2 rounded-xl">Logout</a>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+
+        <button id="micon" class="md:hidden block cursor-pointer z-50 relative p-2">
+    <i id="menu-icon" class="fa-solid fa-bars text-white text-2xl duration-300"></i>
+</button>
+      </div>
+    </header>
+
+    <div class="bg-gray-900  overflow-x-hidden">
+    {% block content %}
+
+    {% endblock %}
+    </div>
+
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-900 text-white py-12 px-4 md:px-8">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <!-- About -->
+        <div class="space-y-4">
+          <h3 class="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400">DigiLibrary</h3>
+          <p class="text-gray-300 text-sm md:text-base">Explore thousands of e-books, enhance your knowledge, and build a smarter future.</p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="space-y-4">
+          <h3 class="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400">Quick Links</h3>
+          <ul class="space-y-2">
+            <li>
+              <a href="/" class="text-gray-300 hover:text-blue-400 transition cursor-pointer">&rarr;Home</a>
+            </li>
+            <li>
+              <a href="{% url 'about' %}" class="text-gray-300 hover:text-blue-400 transition cursor-pointer">&rarr;About</a>
+            </li>
+            <li>
+              <a href="{% url 'allbooks' %}" class="text-gray-300 hover:text-blue-400 transition cursor-pointer">&rarr;Books</a>
+            </li>
+            <li>
+              <a href="{% url 'contact' %}" class="text-gray-300 hover:text-blue-400 transition cursor-pointer">&rarr;Contact</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Social Media -->
+        <div class="space-y-4">
+          <h3 class="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400">Follow Us</h3>
+          <div class="flex gap-4">
+            <a href="{% url 'social' %}" class="text-gray-300 hover:text-blue-400 transition"><i class="fab fa-facebook-f"></i></a>
+            <a href="{% url 'social' %}" class="text-gray-300 hover:text-blue-400 transition"><i class="fab fa-twitter"></i></a>
+            <a href="{% url 'social' %}" class="text-gray-300 hover:text-blue-400 transition"><i class="fab fa-instagram"></i></a>
+            <a href="{% url 'social' %}" class="text-gray-300 hover:text-blue-400 transition"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <hr class="my-6 border-gray-700" />
+
+      <!-- Copyright -->
+      <div class="text-center text-gray-400 text-sm">
+        <span>&copy; 2026 DigiLibrary | All Rights Reserved</span>
+        <br />
+        <span>Developed By - Pawan Maurya</span>
+      </div>
+    </footer>
+
+    <script src="{% static 'js/aos.js' %}"></script>
+
+    <script>
+  AOS.init({
+    duration:800,
+    once:true,
+    mirror:false
+  }); 
+
+</script>
+<script>
+  let mIconElement = document.querySelector('#micon');
+  let navElement = document.querySelector('nav');
+  let iconElement = document.querySelector('#menu-icon'); 
+
+  mIconElement.addEventListener('click', () => {
+    
+    navElement.classList.toggle('left-[0px]');
+
+  
+    if (navElement.classList.contains('left-[0px]')) {
+      
+      iconElement.classList.remove('fa-bars');
+      iconElement.classList.add('fa-xmark');
+      iconElement.classList.add('rotate-90'); 
+    } else {
+     
+      iconElement.classList.remove('fa-xmark');
+      iconElement.classList.add('fa-bars');
+      iconElement.classList.remove('rotate-90');
+    }
+  });
+
+ 
+  document.addEventListener('click', (e) => {
+    if (!navElement.contains(e.target) && !mIconElement.contains(e.target)) {
+        navElement.classList.remove('left-[0px]');
+        iconElement.classList.remove('fa-xmark');
+        iconElement.classList.add('fa-bars');
+        iconElement.classList.remove('rotate-90');
+    }
+  });
+</script>
+    
+  </body>
+</html>
+
+
+
+
+
+
+
+
