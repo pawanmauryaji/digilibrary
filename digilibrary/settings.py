@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 
-ALLOWED_HOSTS = ["10.211.189.95","127.0.0.1","localhost"]
+ALLOWED_HOSTS = ["digilibrary.pythonanywhere.com"]
 
 
 # Application definition
